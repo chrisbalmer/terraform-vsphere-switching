@@ -2,24 +2,18 @@ variable "datacenter" {
   type = string
 }
 
+variable "name" {
+  type        = string
+  description = "Name of the distributed switch"
+}
+
 variable "hosts" {
-  type = list(string)
-}
-
-variable "distributed_switches" {
-  default = []
-}
-
-variable "default_distributed_switch" {
-  type = object(
+  type = list(object(
     {
-      name = string
+      name    = string
+      devices = list(string)
     }
-  )
-
-  default = {
-    name = "default"
-  }
+  ))
 }
 
 variable "port_groups" {
@@ -46,4 +40,12 @@ variable "default_port_group" {
   }
 }
 
+variable "nioc" {
+  type    = bool
+  default = true
+}
 
+variable "ldo" {
+  type    = string
+  default = "both"
+}
