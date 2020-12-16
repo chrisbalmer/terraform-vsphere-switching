@@ -36,7 +36,25 @@ resource "vsphere_distributed_port_group" "pg" {
   name                            = each.value.name
   distributed_virtual_switch_uuid = vsphere_distributed_virtual_switch.ds.id
 
-  vlan_id     = each.value.vlan
-  auto_expand = each.value.auto_expand
-  type        = each.value.type
+  vlan_id                                = each.value.vlan
+  auto_expand                            = each.value.auto_expand
+  type                                   = each.value.type
+  port_config_reset_at_disconnect        = each.value.reset
+  block_override_allowed                 = each.value.allowed_overrides.block_ports
+  netflow_override_allowed               = each.value.allowed_overrides.netflow
+  network_resource_pool_override_allowed = each.value.allowed_overrides.resource_pool
+  security_policy_override_allowed       = each.value.allowed_overrides.security_policy
+  shaping_override_allowed               = each.value.allowed_overrides.traffic_shaping
+  traffic_filter_override_allowed        = each.value.allowed_overrides.filtering
+  uplink_teaming_override_allowed        = each.value.allowed_overrides.uplink_teaming
+  vlan_override_allowed                  = each.value.allowed_overrides.vlan
+
+  dynamic "vlan_range" {
+    for_each = each.value.vlan_ranges
+
+    content {
+      min_vlan = vlan_range.value.min_vlan
+      max_vlan = vlan_range.value.max_vlan
+    }
+  }
 }

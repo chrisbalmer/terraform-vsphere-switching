@@ -23,20 +23,49 @@ variable "port_groups" {
 variable "default_port_group" {
   type = object(
     {
-      name               = string
-      distributed_switch = string
-      vlan               = number
-      auto_expand        = bool
-      type               = string
+      name = string
+      vlan = number
+      vlan_ranges = list(object(
+        {
+          max_vlan = number
+          min_vlan = number
+        }
+      ))
+      auto_expand = bool
+      type        = string
+      reset       = bool
+      allowed_overrides = object(
+        {
+          block_ports     = bool
+          traffic_shaping = bool
+          resource_pool   = bool
+          vlan            = bool
+          uplink_teaming  = bool
+          security_policy = bool
+          netflow         = bool
+          filtering       = bool
+        }
+      )
     }
   )
 
   default = {
-    name               = "default"
-    distributed_switch = "default"
-    vlan               = 1
-    auto_expand        = true
-    type               = null
+    name        = "default"
+    vlan        = null
+    vlan_ranges = []
+    auto_expand = true
+    type        = null
+    reset       = true
+    allowed_overrides = {
+      block_ports     = true
+      traffic_shaping = false
+      resource_pool   = false
+      vlan            = false
+      uplink_teaming  = false
+      security_policy = false
+      netflow         = false
+      filtering       = false
+    }
   }
 }
 
