@@ -31,9 +31,12 @@ variable "default_port_group" {
           min_vlan = number
         }
       ))
-      auto_expand = bool
-      type        = string
-      reset       = bool
+      auto_expand            = bool
+      type                   = string
+      reset                  = bool
+      allow_forged_transmits = bool
+      allow_mac_changes      = bool
+      allow_promiscuous      = bool
       allowed_overrides = object(
         {
           block_ports     = bool
@@ -50,12 +53,15 @@ variable "default_port_group" {
   )
 
   default = {
-    name        = "default"
-    vlan        = null
-    vlan_ranges = []
-    auto_expand = true
-    type        = null
-    reset       = true
+    name                   = "default"
+    vlan                   = null
+    vlan_ranges            = []
+    auto_expand            = true
+    type                   = null
+    reset                  = true
+    allow_forged_transmits = false
+    allow_mac_changes      = false
+    allow_promiscuous      = false
     allowed_overrides = {
       block_ports     = true
       traffic_shaping = false

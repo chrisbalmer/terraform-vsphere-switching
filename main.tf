@@ -40,6 +40,9 @@ resource "vsphere_distributed_port_group" "pg" {
   auto_expand                            = each.value.auto_expand
   type                                   = each.value.type
   port_config_reset_at_disconnect        = each.value.reset
+  allow_forged_transmits                 = each.value.allow_forged_transmits
+  allow_mac_changes                      = each.value.allow_mac_changes
+  allow_promiscuous                      = each.value.allow_promiscuous
   block_override_allowed                 = each.value.allowed_overrides.block_ports
   netflow_override_allowed               = each.value.allowed_overrides.netflow
   network_resource_pool_override_allowed = each.value.allowed_overrides.resource_pool
