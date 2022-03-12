@@ -29,6 +29,7 @@ resource "vsphere_distributed_virtual_switch" "ds" {
 
   network_resource_control_enabled = var.nioc
   link_discovery_operation         = var.ldo
+  version                          = var.ds_version
 }
 
 resource "vsphere_distributed_port_group" "pg" {
